@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Etika Bermenfess · Kelompok 12</title>
+<meta name="description" content="Pretest, materi, dan posttest tentang etika menggunakan menfess. Tugas Etika Profesi Kelompok 12.">
+<meta name="theme-color" content="#F5EDDF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#19140F" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="stripe" aria-hidden="true"></div>
+
+<nav class="steps" id="steps" aria-label="Tahapan" hidden>
+  <ol>
+    <li data-step="pre">Pretest</li>
+    <li data-step="materi">Materi</li>
+    <li data-step="post">Posttest</li>
+    <li data-step="hasil">Hasil</li>
+  </ol>
+</nav>
+
+<main>
+  <noscript><div class="banner">Website ini butuh JavaScript. Aktifkan JavaScript di browser lalu muat ulang halaman.</div></noscript>
+  <div class="banner" id="modeUji" hidden><b>Mode uji lokal.</b> URL Google Sheets belum diisi di <code>assets/soal.js</code>, jadi jawaban tidak dikirim ke mana pun. Isi jawaban yang akan dikirim tampil di Console browser.</div>
+
+  <!-- ============ PEMBUKA ============ -->
+  <section class="view" id="view-intro" hidden>
+    <div class="card">
+      <span class="eyebrow">Etika Profesi · Kelompok 12</span>
+      <h1>Etika Bermenfess</h1>
+      <p class="lead">Seberapa paham kamu soal batas aman menfess? Isi kuis singkat, baca materinya, lalu isi kuis yang sama sekali lagi.</p>
+      <ol class="flow">
+        <li><b>Pretest</b>: 10 soal pilihan ganda, jawab sesuai pemahamanmu sekarang.</li>
+        <li><b>Materi</b>: bacaan sekitar 5–7 menit.</li>
+        <li><b>Posttest</b>: 10 soal yang sama, urutannya diacak.</li>
+        <li><b>Hasil</b>: skor sebelum dan sesudah, beserta pembahasan tiap soal.</li>
+      </ol>
+      <p class="small muted">Waktu total sekitar 15 menit. Kami tidak meminta nama, NRP, atau kontak. Yang disimpan hanya departemen, angkatan, skor pretest dan posttest, serta waktu pengisian, di Google Sheets milik kelompok untuk tugas mata kuliah Etika Profesi.</p>
+    </div>
+    <form class="card" id="formIntro" novalidate>
+      <h2>Sebelum mulai</h2>
+      <div class="fields">
+        <div class="field">
+          <label for="departemen">Departemen</label>
+          <input id="departemen" name="departemen" type="text" autocomplete="off" maxlength="80" placeholder="contoh: Teknik Informatika" required>
+        </div>
+        <div class="field">
+          <label for="angkatan">Angkatan</label>
+          <select id="angkatan" name="angkatan" required>
+            <option value="">Pilih angkatan</option>
+          </select>
+        </div>
+      </div>
+      <label class="check" for="setuju">
+        <input id="setuju" name="setuju" type="checkbox" required>
+        <span>Saya bersedia jawaban saya dipakai sebagai data tugas Etika Profesi Kelompok 12.</span>
+      </label>
+      <div class="actions">
+        <button class="btn" id="btnMulai" type="submit" disabled>Mulai pretest</button>
+        <span class="small muted" id="introHint">Isi departemen, angkatan, dan centang persetujuan dulu.</span>
+      </div>
+    </form>
+  </section>
+
+  <!-- ============ PRETEST ============ -->
+  <section class="view" id="view-pre" hidden>
+    <div class="card quiz" id="quizPre"></div>
+    <p class="small muted center">Jawab sesuai pemahamanmu sekarang, tidak apa-apa kalau belum yakin. Setelah pretest dikirim, jawabannya tidak bisa diubah.</p>
+  </section>
+
+  <!-- ============ HASIL SEMENTARA PRETEST ============ -->
+  <section class="view" id="view-prehasil" hidden>
+    <div class="card">
+      <span class="eyebrow">Hasil sementara · Pretest</span>
+      <h2>Pretest selesai</h2>
+      <div class="scores single">
+        <div class="score">
+          <span class="lbl">Skor pretest</span>
+          <span class="v" id="preSkor">0<small> / 10</small></span>
+        </div>
+      </div>
+      <h3>Per topik</h3>
+      <ul class="topics" id="preTopik"></ul>
+      <p class="small muted">Kunci jawaban dan pembahasan tiap soal muncul setelah posttest, bersama perbandingan skor sebelum dan sesudah membaca materi. Berikutnya: materi singkat sekitar 5–7 menit.</p>
+      <div class="actions"><button class="btn" id="btnPreHasil" type="button">Lanjut ke materi</button></div>
+    </div>
+  </section>
+
+  <!-- ============ MATERI ============ -->
+  <section class="view" id="view-materi" hidden>
+<section class="card">
+  <span class="eyebrow">Materi · 5–7 menit</span>
+  <h1>Anonim boleh, asal tahu batasnya</h1>
+  <p class="lead">Menfess (<i>mention confess</i>) adalah pesan yang dikirim tanpa nama lewat akun perantara di X atau Instagram, biasanya dengan bayar beberapa ribu rupiah per unggahan. Bertanya soal matkul, mencari barang hilang, atau curhat lewat menfess tidak dilarang.</p>
+  <p>Masalahnya muncul saat nama yang disembunyikan dipakai untuk menyerang orang lain. Pegangannya satu: <b>tulis hanya hal yang tetap berani kamu pertanggungjawabkan kalau namamu ikut tercantum.</b> Anonim hanya menyembunyikan namamu dari pembaca. Aturan kampus dan hukum tetap berlaku untuk isi yang kamu kirim.</p>
+  <div class="stat stat2">
+    <div class="figs">
+      <div class="fig bad"><span class="num">1,6%</span><span class="cap">jelas melanggar<br><span class="muted">13 unggahan</span></span></div>
+      <div class="fig warn"><span class="num">6,7%</span><span class="cap">termasuk yang menyindir orang atau kelompok<br><span class="muted">56 unggahan</span></span></div>
+    </div>
+    <div class="bar" role="img" aria-label="Dari 838 unggahan: 13 jelas melanggar, 43 menyindir orang atau kelompok, 782 wajar">
+      <span class="b-bad" style="width:1.55%"></span><span class="b-warn" style="width:5.13%"></span><span class="b-ok"></span>
+    </div>
+    <p class="small">Kami membaca 838 unggahan akun menfess kampus (@fess10nopember, 2 Oktober – 5 November 2026). <b>13</b> jelas melanggar: ejekan bernada SARA, menakut-nakuti atas nama senioritas, menyebar atau mencari data pribadi, dan ancaman. <b>43</b> lainnya belum sejauh itu, tapi sudah menyindir atau menyerang orang atau kelompok tertentu. Sisanya, sekitar 93%, wajar: tanya matkul, jual-beli, info barang hilang, dan curhat. <span class="muted">Observasi Kelompok 12.</span></p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Kenapa ruang anonim gampang kebablasan</h2>
+  <p>Psikolog John Suler (2004) menyebut gejala ini <i>online disinhibition effect</i>: di layar, orang melonggarkan rem yang biasanya mereka pakai saat bertatap muka. Tiga penyebabnya paling terasa di menfess.</p>
+  <ul class="mistakes">
+    <li><b>Merasa terpisah dari identitas asli.</b> Tulisan tidak terasa sebagai milik diri sendiri, jadi lebih mudah ditulis kasar.</li>
+    <li><b>Tidak melihat reaksi korban.</b> Wajah orang yang tersinggung tidak pernah terlihat, jadi tidak ada yang menahan.</li>
+    <li><b>Ada jeda waktu.</b> Kirim sekarang, tanggapan datang belakangan, dan pengirim bisa pergi begitu saja.</li>
+  </ul>
+  <p>Suler juga mencatat sisi baiknya: anonimitas membuat orang lebih berani bercerita dan minta tolong. Jadi masalahnya ada pada isi pesan, bukan pada fitur anonimnya.</p>
+  <p>Pola ini pernah terlihat di Yik Yak, aplikasi anonim yang populer di kampus Amerika Serikat. Studi atas 4.001 unggahan dari 42 kampus menemukan sekitar 45% isinya soal kehidupan kampus dan pengumuman, sementara bagian yang kasar jauh lebih kecil (Black dkk., 2016). Polanya mirip temuan kami: mayoritas wajar, minoritas yang bermasalah tetap merugikan orang.</p>
+</section>
+
+<section class="card">
+  <h2>Garis batasnya</h2>
+  <p>Isi menfess bisa dibagi ke tiga zona. Zona kuning paling sering menjebak, karena bisa berubah jadi merah hanya karena satu detail kecil.</p>
+  <div class="zones">
+    <div class="zone ok">
+      <h3><span class="dot"></span>Hijau: aman</h3>
+      <ul>
+        <li>Tanya info matkul, jadwal, atau fasilitas kampus</li>
+        <li>Peringatan keamanan, misalnya jalan gelap atau barang hilang</li>
+        <li>Jual-beli, cari teman, atau barang ketinggalan</li>
+        <li>Curhat dan keluh kesah yang tidak menyasar orang tertentu</li>
+        <li>Satire kehidupan kampus yang tidak mengejek kelompok mana pun</li>
+      </ul>
+      <p class="rule">Boleh. Tetap cek kebenaran informasinya sebelum dikirim.</p>
+    </div>
+    <div class="zone warn">
+      <h3><span class="dot"></span>Kuning: hati-hati, bisa jadi merah</h3>
+      <ul>
+        <li>"Spill" kejadian yang melibatkan orang lain, walau tanpa nama</li>
+        <li>Keluhan tentang dosen, organisasi, kepanitiaan, atau unit kampus</li>
+        <li>Mengunggah tangkapan layar chat grup atau dokumen</li>
+        <li>Meme atau candaan tentang jurusan, angkatan, atau daerah asal</li>
+      </ul>
+      <p class="rule">Pastikan tidak ada orang yang bisa dikenali, kritik perbuatannya dan bukan orangnya, dan hapus data yang bukan milikmu.</p>
+      <div class="rewrite">
+        <div class="post before">
+          <div class="tag">Sebelum</div>
+          "Itu lho ketua divisi acara angk. 24 jurusan sebelah yg rambut keriting, kerjanya cuma marah2 doang, pantes acaranya ancur."
+        </div>
+        <div class="post after">
+          <div class="tag">Sesudah</div>
+          "Ada saran nggak cara ngasih masukan ke panitia kalau briefing-nya sering pakai bentakan? Biar bisa disampaikan baik-baik."
+        </div>
+      </div>
+      <p class="small muted">Versi pertama bisa membuat satu orang dikenali dari ciri-cirinya. Versi kedua tetap menyampaikan masalah tanpa menyerang siapa pun.</p>
+    </div>
+    <div class="zone bad">
+      <h3><span class="dot"></span>Merah: melanggar</h3>
+      <ul>
+        <li>Menuduh atau menghina orang yang bisa dikenali</li>
+        <li>Ejekan berdasarkan suku, agama, ras, fisik, atau golongan</li>
+        <li>Membenarkan perundungan atas nama senioritas atau "pembinaan"</li>
+        <li>Menyebar data pribadi atau internal: NRP, nomor HP, foto, rekap nilai, isi rapat</li>
+        <li>Membongkar atau menebak-nebak identitas pengirim menfess lain</li>
+        <li>Ancaman, walau ditulis sebagai candaan</li>
+      </ul>
+      <p class="rule">Jangan dikirim. Aturan dan sanksinya ada di bagian berikut.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Sebelum klik kirim, cek tiga hal</h2>
+  <ol class="checks">
+    <li><span><b>Apakah ada orang yang bisa dikenali?</b><span class="muted">Inisial, jurusan, angkatan, jabatan, atau foto sudah cukup bagi teman satu kampus untuk menebak.</span></span></li>
+    <li><span><b>Berani nggak kalau namaku ikut tercantum?</b><span class="muted">Kalau jawabannya tidak, isinya kemungkinan besar sudah masuk zona merah.</span></span></li>
+    <li><span><b>Informasi ini milikku untuk dibagikan?</b><span class="muted">Data teman, dokumen organisasi, dan isi chat grup bukan milikmu walau kamu bisa mengaksesnya.</span></span></li>
+  </ol>
+</section>
+
+<section class="card">
+  <h2>Aturan dan sanksinya</h2>
+  <p>Zona merah diatur secara tertulis, mulai dari kode etik kampus sampai undang-undang. Kode etik ITS berlaku untuk aktivitas mahasiswa di dalam maupun di luar kampus, termasuk di media sosial.</p>
+  <div class="rules">
+    <details open>
+      <summary><span class="badge kampus">Aturan kampus</span><span class="t">Peraturan Rektor ITS No. 34 Tahun 2025 tentang Kode Etik Mahasiswa</span></summary>
+      <div class="dbody">
+        <p><span class="lbl">Yang diatur</span>Berlaku di dalam maupun di luar lingkungan ITS (Pasal 4). Mahasiswa dilarang mencemarkan nama baik seseorang lewat media sosial (Pasal 15 angka 8), melakukan kekerasan atau perundungan (angka 9), membeda-bedakan orang berdasarkan SARA (angka 13), menyebarluaskan informasi yang bertentangan dengan norma hukum dan sosial (angka 14), serta melecehkan suku, agama, ras, dan golongan (angka 28). Kewajiban yang sama ditegaskan terhadap sesama mahasiswa (Pasal 14 huruf i dan j), dosen, dan tenaga kependidikan.</p>
+        <p><span class="lbl">Sanksi</span>Berjenjang: ringan (surat permohonan maaf, kerja sosial), sedang (pembatalan mata kuliah, penundaan wisuda, skorsing hingga 1 semester), dan berat (skorsing hingga 2 semester, dilaporkan ke kepolisian atau kejaksaan, pencabutan status mahasiswa) (Pasal 25). Tingkat sanksi tiap pelanggaran ditetapkan di Lampiran. Melakukan beberapa pelanggaran sekaligus berarti sanksi sedang atau berat, dan mengulang berarti sanksi lebih berat dari sebelumnya (Pasal 26).</p>
+        <p><span class="lbl">Pelaporan</span>Siapa pun yang mengetahui dugaan pelanggaran wajib melapor, dan identitas pelapor wajib dirahasiakan (Pasal 16).</p>
+      </div>
+    </details>
+    <details>
+      <summary><span class="badge kampus">Aturan kampus</span><span class="t">Permendikbudristek No. 55 Tahun 2024 tentang Pencegahan dan Penanganan Kekerasan di Lingkungan Perguruan Tinggi</span></summary>
+      <div class="dbody">
+        <p><span class="lbl">Yang diatur</span>Enam bentuk kekerasan: fisik, psikis, perundungan, seksual, diskriminasi dan intoleransi, serta kebijakan yang mengandung kekerasan. Semuanya bisa dilakukan secara langsung atau lewat media elektronik (Pasal 7 ayat 3).</p>
+        <p><span class="lbl">Relevansinya</span>Ejekan yang bertujuan merendahkan atau menghina termasuk kekerasan psikis (Pasal 10). Kalau dilakukan berulang dan ada ketimpangan relasi kuasa, misalnya senior kepada maba, itu masuk perundungan (Pasal 11). Kasusnya ditangani Satgas PPKPT di tiap kampus.</p>
+      </div>
+    </details>
+    <details>
+      <summary><span class="badge pidana">Pidana</span><span class="t">UU No. 1 Tahun 2023 tentang KUHP, berlaku sejak 2 Januari 2026</span></summary>
+      <div class="dbody">
+        <p><span class="lbl">Yang diatur</span>Pencemaran nama baik dengan menuduhkan sesuatu agar diketahui umum (Pasal 433), penghinaan ringan (Pasal 436), serta menyatakan permusuhan, kebencian, atau penghinaan di muka umum terhadap golongan penduduk berdasarkan ras, etnis, agama, dan sejenisnya (Pasal 242). Menyebarluaskan konten seperti itu lewat teknologi informasi sampai menimbulkan kekerasan diatur tersendiri di Pasal 243. Ancaman pidana pencemaran dapat ditambah sepertiga jika dilakukan lewat sarana teknologi informasi (Pasal 441).</p>
+        <p><span class="lbl">Catatan</span>Pencemaran nama baik adalah delik aduan, jadi hanya diproses jika korban melapor. Sebelum 2026, perbuatan ini diatur di Pasal 27A dan 28 ayat (2) UU ITE. UU No. 1 Tahun 2024 menyatakan pasal-pasal itu hanya berlaku sampai KUHP baru berlaku (Pasal II). Sebagian pasal KUHP juga sudah disesuaikan oleh UU No. 1 Tahun 2026 tentang Penyesuaian Pidana.</p>
+      </div>
+    </details>
+    <details>
+      <summary><span class="badge pidana">Pidana</span><span class="t">UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi</span></summary>
+      <div class="dbody">
+        <p><span class="lbl">Yang diatur</span>Setiap orang dilarang secara melawan hukum mengungkapkan data pribadi yang bukan miliknya (Pasal 65 ayat 2).</p>
+        <p><span class="lbl">Sanksi</span>Penjara paling lama 4 tahun dan/atau denda paling banyak Rp4 miliar (Pasal 67 ayat 2). Rekap nilai yang memuat nama atau NRP, nomor HP, dan foto orang lain termasuk data pribadi.</p>
+      </div>
+    </details>
+    <details>
+      <summary><span class="badge platform">Aturan platform</span><span class="t">Kebijakan Informasi Pribadi X (Private Content Policy)</span></summary>
+      <div class="dbody">
+        <p><span class="lbl">Yang diatur</span>X melarang membagikan informasi pribadi orang lain tanpa izin, termasuk alamat, nomor kontak, dokumen identitas, data kesehatan, dan <b>identitas pengguna anonim</b>. Jadi membongkar siapa pengirim sebuah menfess juga melanggar.</p>
+        <p><span class="lbl">Sanksi</span>Unggahan wajib dihapus, akun bisa dibatasi sementara, dan pelanggaran berulang bisa berujung penangguhan akun.</p>
+      </div>
+    </details>
+  </div>
+  <p class="note">Hukum, aturan kampus, dan etika itu berbeda lapisan. Ejekan di menfess mungkin tidak pernah dilaporkan ke polisi, tapi tetap bisa diproses lewat kode etik ITS atau Satgas PPKPT. Sebaliknya, ada perbuatan yang kena ketiganya sekaligus, misalnya menyebar rekap nilai panitia berisi nama dan NRP sambil mengejek orangnya.</p>
+</section>
+
+<section class="card">
+  <h2>Kesalahan yang paling sering terjadi</h2>
+  <p>Sebagian besar unggahan bermasalah berawal dari anggapan yang keliru.</p>
+  <ul class="mistakes">
+    <li><b>"Kan anonim, nggak bakal ketahuan."</b> Namamu hanya tersembunyi dari pembaca. Pengiriman berbayar meninggalkan jejak akun dan transaksi di pihak pengelola, dan tangkapan layar tidak bisa ditarik kembali.</li>
+    <li><b>"Nggak sebut nama, jadi aman."</b> Inisial, jurusan, angkatan, atau jabatan sering cukup untuk membuat orang dikenali di lingkungan satu kampus.</li>
+    <li><b>"Cuma bercanda."</b> Kalau isinya merendahkan seseorang atau golongan, label bercanda tidak mengubah dampaknya bagi yang diejek.</li>
+    <li><b>"Aku cuma reply atau quote."</b> Ikut menambah ejekan atau menyebarkan ulang tetap termasuk menyebarluaskan. Pembaca juga ikut menentukan apakah konten itu makin viral.</li>
+    <li><b>"Ini di luar kampus, bukan urusan ITS."</b> Kode Etik Mahasiswa ITS berlaku untuk aktivitas di dalam maupun di luar kampus (Pasal 4).</li>
+    <li><b>"Ayo tebak siapa yang ngirim."</b> Membongkar identitas pengirim menfess lain melanggar kebijakan X dan bisa membahayakan orang yang salah tebak.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>Kalau kamu jadi sasaran atau melihatnya</h2>
+  <ul class="mistakes">
+    <li><b>Simpan bukti.</b> Tangkapan layar lengkap dengan nama akun, tanggal, dan tautan unggahan.</li>
+    <li><b>Laporkan ke platform.</b> Gunakan fitur report di X, atau minta admin menfess menghapus unggahannya.</li>
+    <li><b>Laporkan ke kampus.</b> Ke departemen, unit kemahasiswaan, atau Satgas PPKPT ITS. Identitas pelapor wajib dirahasiakan.</li>
+    <li><b>Jangan balas di kolom komentar.</b> Membalas biasanya membuat unggahan makin ramai dan makin luas dibaca.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>Sumber</h2>
+  <ul class="sources">
+    <li><a href="https://www.its.ac.id/sustainability/wp-content/uploads/sites/120/2026/04/4048-SALINAN_Peraturan-Rektor-Nomor-34-Tahun-2025-Kode-Etik-Mahasiswa-ITS.pdf" target="_blank" rel="noopener">Peraturan Rektor ITS No. 34 Tahun 2025 tentang Kode Etik Mahasiswa</a></li>
+    <li><a href="https://pasal.id/peraturan/permen/permendikbudristek-no-55-tahun-2024" target="_blank" rel="noopener">Permendikbudristek No. 55 Tahun 2024 tentang PPKPT</a></li>
+    <li>UU No. 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana</li>
+    <li><a href="https://jdih.komdigi.go.id/produk_hukum/view/id/884/t/undangundang+nomor+1+tahun+2024" target="_blank" rel="noopener">UU No. 1 Tahun 2024 tentang Perubahan Kedua UU ITE, JDIH Komdigi</a></li>
+    <li>UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi</li>
+    <li><a href="https://help.x.com/en/rules-and-policies/personal-information" target="_blank" rel="noopener">X Help Center, Private Content Policy</a></li>
+    <li><a href="https://aura-lab.siue.edu/theories/online-disinhibition-effect/" target="_blank" rel="noopener">Suler, J. (2004). The Online Disinhibition Effect. CyberPsychology &amp; Behavior, 7(3), 321–326</a></li>
+    <li><a href="https://ufhealth.org/news/2016/block-yik-yak-uf-health-researchers-suggest-doing-research-first" target="_blank" rel="noopener">Black dkk. (2016), Anonymous social media: Understanding the content and context of Yik Yak, Computers in Human Behavior</a></li>
+    <li>Observasi Kelompok 12 atas akun @fess10nopember, Mulai 2 Oktober 2026</li>
+  </ul>
+</section>
+    <div class="card">
+      <h2>Sudah selesai membaca?</h2>
+      <p class="small muted">Setelah lanjut, kamu akan mengerjakan 10 soal yang sama dengan pretest. Materi tidak bisa dibuka lagi selama posttest.</p>
+      <div class="actions"><button class="btn" id="btnMateri" type="button">Lanjut ke posttest</button></div>
+    </div>
+  </section>
+
+  <!-- ============ POSTTEST ============ -->
+  <section class="view" id="view-post" hidden>
+    <div class="card quiz" id="quizPost"></div>
+    <p class="small muted center">Soal yang sama dengan pretest, urutannya diacak. Jawab berdasarkan apa yang kamu pahami sekarang.</p>
+  </section>
+
+  <!-- ============ HASIL ============ -->
+  <section class="view" id="view-hasil" hidden>
+    <div class="card">
+      <span class="eyebrow">Hasil</span>
+      <h2>Terima kasih sudah mengisi</h2>
+      <div class="scores" id="scores"></div>
+      <div class="status wait" id="sendStatus" role="status"></div>
+    </div>
+    <div class="card">
+      <h2>Pembahasan</h2>
+      <ol class="review" id="review"></ol>
+    </div>
+  </section>
+
+  <footer>Tugas Etika Profesi · Kelompok 12 · ITS</footer>
+</main>
+
+<script src="assets/soal.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
