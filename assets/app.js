@@ -372,7 +372,7 @@
   function renderStatus(msg) {
     var box = $("sendStatus");
     box.textContent = "";
-    $("baruWrap").hidden = !(state.sent || !KONFIG.SHEETS_URL);
+    if ($("baruWrap")) $("baruWrap").hidden = !(state.sent || !KONFIG.SHEETS_URL);
     if (!KONFIG.SHEETS_URL) {
       box.className = "status wait";
       box.appendChild(el("span", "", "Mode uji lokal: jawaban tidak dikirim. Isinya bisa dilihat di Console browser."));
@@ -404,7 +404,7 @@
       .catch(function () { sending = false; renderStatus(); });
   }
 
-  $("btnBaru").addEventListener("click", mulaiBaru);
+  if ($("btnBaru")) $("btnBaru").addEventListener("click", mulaiBaru);
   show();
   // Responden yang sempat gagal kirim lalu membuka lagi halaman ini: coba kirim otomatis.
   if (state.step === "hasil" && !state.sent && KONFIG.SHEETS_URL) kirim();
