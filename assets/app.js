@@ -16,11 +16,18 @@
 
   // ---------- penyimpanan progres di browser responden ----------
   // Supaya jawaban tidak hilang kalau halaman tidak sengaja dimuat ulang.
+  
   function load() {
-    try { var s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && s.id) return s; } catch (e) {}
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY) || "null");
+      if (s && s.id && !s.sent && !(s.step === "hasil" && !KONFIG.SHEETS_URL)) return s;
+      localStorage.removeItem(KEY);
+    } catch (e) {}
     return null;
   }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function clearSaved() { try { localStorage.removeItem(KEY); } catch (e) {} }
+  function mulaiBaru() { clearSaved(); location.replace(location.pathname); }
 
   function uid() {
     if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
@@ -365,6 +372,7 @@
   function renderStatus(msg) {
     var box = $("sendStatus");
     box.textContent = "";
+    $("baruWrap").hidden = !(state.sent || !KONFIG.SHEETS_URL);
     if (!KONFIG.SHEETS_URL) {
       box.className = "status wait";
       box.appendChild(el("span", "", "Mode uji lokal: jawaban tidak dikirim. Isinya bisa dilihat di Console browser."));
@@ -390,12 +398,13 @@
       .then(function (r) { return r.json(); })
       .then(function (res) {
         sending = false;
-        if (res && res.ok) { state.sent = true; save(); renderStatus(); }
+        if (res && res.ok) { state.sent = true; clearSaved(); renderStatus(); }
         else renderStatus("Server menolak data (" + ((res && res.error) || "tanpa keterangan") + "). Hubungi Kelompok 12.");
       })
       .catch(function () { sending = false; renderStatus(); });
   }
 
+  $("btnBaru").addEventListener("click", mulaiBaru);
   show();
   // Responden yang sempat gagal kirim lalu membuka lagi halaman ini: coba kirim otomatis.
   if (state.step === "hasil" && !state.sent && KONFIG.SHEETS_URL) kirim();

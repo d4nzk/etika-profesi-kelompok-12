@@ -195,3 +195,4 @@ footer{font-size:13px;color:var(--muted);text-align:center}
 .stat2 .bar span{display:block;height:100%}
 .stat2 .b-bad{background:var(--bad-ink);min-width:4px} .stat2 .b-warn{background:var(--warn-ink)} .stat2 .b-ok{flex:1;background:var(--ok-ink);opacity:.35}
 @media (max-width:420px){.stat2 .figs{grid-template-columns:1fr}}
+.baru{display:flex;flex-direction:column;gap:10px;border-top:1px dashed var(--line);padding-top:14px}
